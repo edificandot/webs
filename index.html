@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Mi Devocional Diario | Palabra Rhema</title>
+
+  <style>
+    :root {
+      --verde-profundo: #143b32;
+      --verde: #276859;
+      --verde-claro: #eaf4ef;
+      --dorado: #c6923c;
+      --dorado-claro: #fff6e3;
+      --crema: #faf8f2;
+      --blanco: #ffffff;
+      --texto: #24322f;
+      --texto-suave: #60716d;
+      --borde: #dce8e3;
+      --sombra: 0 10px 28px rgba(20, 59, 50, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top right, rgba(198, 146, 60, 0.12), transparent 35%),
+        var(--crema);
+      color: var(--texto);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+
+    header {
+      background:
+        linear-gradient(135deg, rgba(20, 59, 50, 0.97), rgba(39, 104, 89, 0.94));
+      color: var(--blanco);
+      padding: 34px 18px 88px;
+      text-align: center;
+    }
+
+    header .icono-principal {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      margin-bottom: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 34px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.1rem);
+      letter-spacing: -1px;
+    }
+
+    header p {
+      max-width: 670px;
+      margin: 10px auto 0;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.04rem;
+    }
+
+    .contenedor {
+      width: min(1120px, 92%);
+      margin: -54px auto 60px;
+    }
+
+    .tarjeta {
+      margin-bottom: 20px;
+      padding: 24px;
+      border: 1px solid var(--borde);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.97);
+      box-shadow: var(--sombra);
+    }
+
+    .tarjeta h2 {
+      display: flex;
+      gap: 9px;
+      align-items: center;
+      margin-top: 0;
+      margin-bottom: 8px;
+      color: var(--verde-profundo);
+      font-size: 1.34rem;
+    }
+
+    .tarjeta h3 {
+      margin-top: 0;
+      color: var(--verde-profundo);
+      font-size: 1.05rem;
+    }
+
+    .subtexto {
+      margin-top: 0;
+      color: var(--texto-suave);
+      font-size: 0.94rem;
+    }
+
+    .panel-inicial {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .fecha {
+      color: var(--dorado);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+    }
+
+    .boton {
+      display: inline-flex;
+      gap: 7px;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 16px;
+      border: none;
+      border-radius: 12px;
+      background: var(--verde);
+      color: var(--blanco);
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+
+    .boton:hover {
+      background: var(--verde-profundo);
+      transform: translateY(-2px);
+    }
+
+    .boton.secundario {
+      border: 1px solid var(--borde);
+      background: var(--blanco);
+      color: var(--verde-profundo);
+    }
+
+    .boton.dorado {
+      background: var(--dorado);
+    }
+
+    .boton.peligro {
+      background: #a64949;
+    }
+
+    .grupo-botones {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    label {
+      display: block;
+      margin: 14px 0 5px;
+      color: var(--verde-profundo);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px 13px;
+      border: 1px solid var(--borde);
+      border-radius: 11px;
+      background: #fcfdfc;
+      color: var(--texto);
+      font-family: inherit;
+      font-size: 0.98rem;
+      outline: none;
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    textarea {
+      min-height: 112px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--verde);
+      box-shadow: 0 0 0 3px rgba(39, 104, 89, 0.13);
+    }
+
+    .versiculo-area {
+      min-height: 145px;
+      font-size: 1.07rem;
+      line-height: 1.75;
+    }
+
+    .grid-2,
+    .grid-3 {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .caja-guia {
+      margin-top: 15px;
+      padding: 15px;
+      border-left: 5px solid var(--dorado);
+      border-radius: 10px;
+      background: var(--dorado-claro);
+      color: #62491f;
+      font-size: 0.92rem;
+    }
+
+    .caja-profunda {
+      height: 100%;
+      padding: 16px;
+      border: 1px solid var(--borde);
+      border-radius: 15px;
+      background: var(--verde-claro);
+    }
+
+    .progreso {
+      overflow: hidden;
+      height: 11px;
+      margin-top: 10px;
+      border-radius: 99px;
+      background: #e8eeee;
+    }
+
+    .barra-progreso {
+      width: 0%;
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--dorado), #e8ba68);
+      transition: width 0.35s ease;
+    }
+
+    .texto-progreso {
+      color: var(--texto-suave);
+      font-size: 0.88rem;
+    }
+
+    .estado {
+      display: none;
+      margin-top: 14px;
+      padding: 11px;
+      border-radius: 10px;
+      background: var(--verde-claro);
+      color: var(--verde-profundo);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    footer {
+      padding: 26px 18px 44px;
+      color: var(--texto-suave);
+      text-align: center;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 780px) {
+      .panel-inicial,
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .tarjeta {
+        padding: 18px;
+        border-radius: 17px;
+      }
+
+      .grupo-botones .boton {
+        flex: 1 1 100%;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      header {
+        padding-bottom: 30px;
+      }
+
+      .contenedor {
+        width: 100%;
+        margin: 0;
+      }
+
+      .tarjeta {
+        break-inside: avoid;
+        box-shadow: none;
+      }
+
+      .no-imprimir {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="icono-principal">📖</div>
+    <h1>Mi Devocional Diario</h1>
+    <p>
+      Un espacio personal para escuchar la voz de Dios, meditar en Su Palabra
+      y convertir cada enseñanza en una acción concreta.
+    </p>
+  </header>
+
+  <main class="contenedor">
+
+    <!-- INICIO -->
+    <section class="tarjeta">
+      <div class="panel-inicial">
+        <div>
+          <div class="fecha" id="fechaActual">Devocional del día</div>
+          <h2>🌿 Comienza tu tiempo con Dios</h2>
+          <p class="subtexto">
+            Abre el Versículo del Día en YouVersion. Léelo con calma,
+            cópialo en esta página y reflexiona en cada sección.
+          </p>
+        </div>
+
+        <a
+          class="boton dorado"
+          href="https://www.bible.com/es/verse-of-the-day"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          📱 Abrir YouVersion
+        </a>
+      </div>
+
+      <div class="progreso">
+        <div class="barra-progreso" id="barraProgreso"></div>
+      </div>
+
+      <p class="texto-progreso">
+        Avance del devocional: <strong id="porcentajeProgreso">0%</strong>
+      </p>
+    </section>
+
+    <!-- VERSÍCULO RHEMA -->
+    <section class="tarjeta">
+      <h2>✨ 1. Mi versículo Rhema</h2>
+      <p class="subtexto">
+        Rhema es la palabra que cobra un significado especial para tu vida
+        mientras lees y meditas en la Escritura.
+      </p>
+
+      <label for="referencia">Referencia bíblica</label>
+      <input
+        id="referencia"
+        class="campo-devocional"
+        type="text"
+        placeholder="Ejemplo: Salmo 42:11"
+      >
+
+      <label for="versionBiblica">Versión bíblica</label>
+      <input
+        id="versionBiblica"
+        class="campo-devocional"
+        type="text"
+        placeholder="Ejemplo: NVI, RVR1960 o NTV"
+      >
+
+      <label for="versiculo">Escribe el Versículo del Día</label>
+      <textarea
+        id="versiculo"
+        class="campo-devocional versiculo-area"
+        placeholder="Copia aquí el texto del Versículo del Día que aparece en YouVersion..."
+      ></textarea>
+
+      <div class="caja-guia">
+        <strong>Para meditar:</strong> lee el versículo lentamente tres veces.
+        Identifica qué frase llama
