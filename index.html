@@ -1,400 +1,470 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Mi Devocional Diario | Palabra Rhema</title>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#203f3a" />
+  <title>Rhema Diario | Devocional y lectura bíblica anual</title>
   <style>
-    :root {
-      --verde-profundo: #143b32;
-      --verde: #276859;
-      --verde-claro: #eaf4ef;
-      --dorado: #c6923c;
-      --dorado-claro: #fff6e3;
-      --crema: #faf8f2;
-      --blanco: #ffffff;
-      --texto: #24322f;
-      --texto-suave: #60716d;
-      --borde: #dce8e3;
-      --sombra: 0 10px 28px rgba(20, 59, 50, 0.10);
+    :root{
+      --bg:#f5f1e8;
+      --paper:#fffdf8;
+      --ink:#203532;
+      --muted:#687a76;
+      --green:#315f57;
+      --green-dark:#203f3a;
+      --sage:#dfe9df;
+      --gold:#c49a57;
+      --gold-soft:#f4ead7;
+      --lavender:#e9e2ef;
+      --border:rgba(49,95,87,.18);
+      --shadow:0 16px 45px rgba(32,63,58,.12);
+      --radius:22px;
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
       background:
-        radial-gradient(circle at top right, rgba(198, 146, 60, 0.12), transparent 35%),
-        var(--crema);
-      color: var(--texto);
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.6;
+        radial-gradient(circle at 0% 0%, rgba(196,154,87,.17), transparent 26rem),
+        radial-gradient(circle at 100% 10%, rgba(117,144,128,.18), transparent 28rem),
+        var(--bg);
+      color:var(--ink);
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height:1.55;
     }
-
-    header {
-      background:
-        linear-gradient(135deg, rgba(20, 59, 50, 0.97), rgba(39, 104, 89, 0.94));
-      color: var(--blanco);
-      padding: 34px 18px 88px;
-      text-align: center;
+    button,input,textarea{font:inherit}
+    button{cursor:pointer}
+    .shell{width:min(1500px,95vw);margin:0 auto;padding:20px 0 44px}
+    header{
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      padding:16px 18px;background:rgba(255,253,248,.82);border:1px solid var(--border);
+      border-radius:20px;box-shadow:0 10px 30px rgba(32,63,58,.07);backdrop-filter:blur(12px);
+      position:sticky;top:10px;z-index:4;
     }
-
-    header .icono-principal {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 64px;
-      height: 64px;
-      margin-bottom: 10px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.14);
-      font-size: 34px;
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand-mark{
+      width:46px;height:46px;border-radius:16px;display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--green-dark),var(--green));color:#fff;font-size:23px;
+      box-shadow:0 8px 20px rgba(32,63,58,.22)
     }
-
-    header h1 {
-      margin: 0;
-      font-size: clamp(2rem, 5vw, 3.1rem);
-      letter-spacing: -1px;
+    .brand h1{font-family:Georgia,serif;margin:0;font-size:1.34rem;letter-spacing:.2px}
+    .brand p{margin:1px 0 0;color:var(--muted);font-size:.8rem}
+    .header-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+    .date-select,.btn{
+      border:1px solid var(--border);background:#fffdf8;color:var(--green-dark);
+      border-radius:13px;padding:10px 12px;font-weight:700;font-size:.85rem
     }
-
-    header p {
-      max-width: 670px;
-      margin: 10px auto 0;
-      color: rgba(255, 255, 255, 0.9);
-      font-size: 1.04rem;
+    .btn.primary{background:var(--green-dark);color:white;border-color:var(--green-dark)}
+    .btn.soft{background:var(--sage)}
+    .btn:hover{transform:translateY(-1px)}
+    .hero{
+      margin-top:18px;padding:24px;border-radius:var(--radius);
+      background:linear-gradient(135deg,rgba(32,63,58,.96),rgba(49,95,87,.91));
+      color:#fff;box-shadow:var(--shadow);overflow:hidden;position:relative
     }
-
-    .contenedor {
-      width: min(1120px, 92%);
-      margin: -54px auto 60px;
+    .hero:after{
+      content:"";position:absolute;width:420px;height:420px;border-radius:50%;
+      background:rgba(255,255,255,.06);right:-170px;top:-190px
     }
-
-    .tarjeta {
-      margin-bottom: 20px;
-      padding: 24px;
-      border: 1px solid var(--borde);
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.97);
-      box-shadow: var(--sombra);
+    .hero-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(230px,.6fr);gap:22px;position:relative;z-index:1}
+    .eyebrow{text-transform:uppercase;letter-spacing:1.8px;font-size:.72rem;font-weight:800;color:#e6d4ae}
+    .hero h2{font-family:Georgia,serif;font-size:clamp(1.75rem,4vw,3rem);line-height:1.12;margin:8px 0 10px}
+    .verse{font-family:Georgia,serif;font-size:clamp(1.1rem,2vw,1.42rem);margin:0 0 12px;max-width:950px}
+    .reference{color:#f2dfb8;font-weight:800}
+    .hero-note{font-size:.86rem;color:rgba(255,255,255,.8)}
+    .hero-card{
+      background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);
+      border-radius:18px;padding:16px;align-self:stretch;display:grid;gap:12px
     }
-
-    .tarjeta h2 {
-      display: flex;
-      gap: 9px;
-      align-items: center;
-      margin-top: 0;
-      margin-bottom: 8px;
-      color: var(--verde-profundo);
-      font-size: 1.34rem;
+    .progress-meta{display:flex;justify-content:space-between;font-size:.8rem;font-weight:800}
+    .progress{height:10px;border-radius:20px;background:rgba(255,255,255,.2);overflow:hidden}
+    .progress span{display:block;height:100%;background:#e2c68e;border-radius:20px}
+    .streak{font-size:.9rem}
+    .layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,.7fr);gap:18px;margin-top:18px}
+    .card{
+      background:rgba(255,253,248,.96);border:1px solid var(--border);border-radius:var(--radius);
+      padding:19px;box-shadow:0 10px 28px rgba(32,63,58,.075)
     }
-
-    .tarjeta h3 {
-      margin-top: 0;
-      color: var(--verde-profundo);
-      font-size: 1.05rem;
+    .card h3{margin:0;font-family:Georgia,serif;font-size:1.25rem}
+    .card-title{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:13px}
+    .title-left{display:flex;gap:10px;align-items:center}
+    .icon{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:var(--sage)}
+    .small{font-size:.81rem;color:var(--muted)}
+    .reading-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+    .reading-pill{padding:12px 13px;border-radius:14px;background:var(--gold-soft);font-weight:800;color:#65512f}
+    .deep-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .deep-box{padding:13px;border-radius:15px;background:#f8f4eb;border:1px solid rgba(196,154,87,.2)}
+    .deep-box h4{margin:0 0 5px;color:var(--green-dark);font-size:.93rem}
+    .deep-box p{margin:0;font-size:.86rem;color:#52635f}
+    .word{
+      margin-top:12px;padding:14px;border-left:4px solid var(--gold);background:var(--gold-soft);border-radius:12px
     }
-
-    .subtexto {
-      margin-top: 0;
-      color: var(--texto-suave);
-      font-size: 0.94rem;
+    .word strong{color:#70572c}
+    .form-grid{display:grid;gap:13px}
+    label{display:block;font-size:.86rem;font-weight:800;color:var(--green-dark);margin-bottom:6px}
+    textarea,input[type="text"]{
+      width:100%;border:1px solid var(--border);background:#fffefa;color:var(--ink);border-radius:13px;
+      padding:11px 12px;outline:none;transition:.2s
     }
-
-    .panel-inicial {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 18px;
-      align-items: center;
+    textarea{min-height:86px;resize:vertical}
+    textarea:focus,input[type="text"]:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(196,154,87,.16)}
+    .save-row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+    .save-msg{font-size:.82rem;color:var(--muted)}
+    .sidebar{display:grid;gap:18px;align-content:start}
+    .checklist{display:grid;gap:9px}
+    .checkline{display:flex;gap:9px;align-items:center;padding:9px;border-radius:12px;background:#f7f4ed}
+    .checkline input{accent-color:var(--green)}
+    .prayer{font-family:Georgia,serif;color:#52635f;font-size:1rem;background:var(--lavender);padding:14px;border-radius:14px;margin:0}
+    .history-list{display:grid;gap:8px;max-height:240px;overflow:auto}
+    .history-item{
+      border:1px solid var(--border);border-radius:13px;padding:10px;background:#fffefa;text-align:left;color:var(--ink)
     }
-
-    .fecha {
-      color: var(--dorado);
-      font-size: 0.9rem;
-      font-weight: 700;
-      letter-spacing: 0.7px;
-      text-transform: uppercase;
+    .history-item strong{display:block;color:var(--green-dark);font-size:.83rem}
+    .history-item span{display:block;color:var(--muted);font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    footer{text-align:center;color:var(--muted);font-size:.78rem;padding-top:18px}
+    @media(max-width:980px){
+      .layout,.hero-grid{grid-template-columns:1fr}
+      header{position:static;align-items:flex-start;flex-direction:column}
+      .header-actions{justify-content:flex-start}
     }
-
-    .boton {
-      display: inline-flex;
-      gap: 7px;
-      align-items: center;
-      justify-content: center;
-      padding: 11px 16px;
-      border: none;
-      border-radius: 12px;
-      background: var(--verde);
-      color: var(--blanco);
-      cursor: pointer;
-      font-size: 0.95rem;
-      font-weight: 700;
-      text-decoration: none;
-      transition: transform 0.18s ease, background 0.18s ease;
+    @media(max-width:620px){
+      .shell{width:min(96vw,620px);padding-top:8px}
+      header,.hero,.card{border-radius:17px}
+      .hero,.card{padding:15px}
+      .deep-grid{grid-template-columns:1fr}
+      .brand p{display:none}
+      .header-actions{width:100%}
+      .date-select{flex:1;min-width:160px}
     }
-
-    .boton:hover {
-      background: var(--verde-profundo);
-      transform: translateY(-2px);
-    }
-
-    .boton.secundario {
-      border: 1px solid var(--borde);
-      background: var(--blanco);
-      color: var(--verde-profundo);
-    }
-
-    .boton.dorado {
-      background: var(--dorado);
-    }
-
-    .boton.peligro {
-      background: #a64949;
-    }
-
-    .grupo-botones {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    label {
-      display: block;
-      margin: 14px 0 5px;
-      color: var(--verde-profundo);
-      font-size: 0.9rem;
-      font-weight: 700;
-    }
-
-    input,
-    textarea,
-    select {
-      width: 100%;
-      padding: 12px 13px;
-      border: 1px solid var(--borde);
-      border-radius: 11px;
-      background: #fcfdfc;
-      color: var(--texto);
-      font-family: inherit;
-      font-size: 0.98rem;
-      outline: none;
-      transition: border 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    textarea {
-      min-height: 112px;
-      resize: vertical;
-    }
-
-    input:focus,
-    textarea:focus,
-    select:focus {
-      border-color: var(--verde);
-      box-shadow: 0 0 0 3px rgba(39, 104, 89, 0.13);
-    }
-
-    .versiculo-area {
-      min-height: 145px;
-      font-size: 1.07rem;
-      line-height: 1.75;
-    }
-
-    .grid-2,
-    .grid-3 {
-      display: grid;
-      gap: 16px;
-    }
-
-    .grid-2 {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .grid-3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .caja-guia {
-      margin-top: 15px;
-      padding: 15px;
-      border-left: 5px solid var(--dorado);
-      border-radius: 10px;
-      background: var(--dorado-claro);
-      color: #62491f;
-      font-size: 0.92rem;
-    }
-
-    .caja-profunda {
-      height: 100%;
-      padding: 16px;
-      border: 1px solid var(--borde);
-      border-radius: 15px;
-      background: var(--verde-claro);
-    }
-
-    .progreso {
-      overflow: hidden;
-      height: 11px;
-      margin-top: 10px;
-      border-radius: 99px;
-      background: #e8eeee;
-    }
-
-    .barra-progreso {
-      width: 0%;
-      height: 100%;
-      border-radius: 99px;
-      background: linear-gradient(90deg, var(--dorado), #e8ba68);
-      transition: width 0.35s ease;
-    }
-
-    .texto-progreso {
-      color: var(--texto-suave);
-      font-size: 0.88rem;
-    }
-
-    .estado {
-      display: none;
-      margin-top: 14px;
-      padding: 11px;
-      border-radius: 10px;
-      background: var(--verde-claro);
-      color: var(--verde-profundo);
-      font-size: 0.9rem;
-      font-weight: 700;
-    }
-
-    footer {
-      padding: 26px 18px 44px;
-      color: var(--texto-suave);
-      text-align: center;
-      font-size: 0.85rem;
-    }
-
-    @media (max-width: 780px) {
-      .panel-inicial,
-      .grid-2,
-      .grid-3 {
-        grid-template-columns: 1fr;
-      }
-
-      .tarjeta {
-        padding: 18px;
-        border-radius: 17px;
-      }
-
-      .grupo-botones .boton {
-        flex: 1 1 100%;
-      }
-    }
-
-    @media print {
-      body {
-        background: white;
-      }
-
-      header {
-        padding-bottom: 30px;
-      }
-
-      .contenedor {
-        width: 100%;
-        margin: 0;
-      }
-
-      .tarjeta {
-        break-inside: avoid;
-        box-shadow: none;
-      }
-
-      .no-imprimir {
-        display: none !important;
-      }
+    @media print{
+      header,.sidebar,.save-row{display:none!important}
+      body{background:#fff}
+      .shell{width:100%;padding:0}
+      .hero{box-shadow:none;border-radius:0}
+      .layout{display:block;margin-top:12px}
+      .card{box-shadow:none;margin-bottom:10px}
     }
   </style>
 </head>
-
 <body>
-
-  <header>
-    <div class="icono-principal">📖</div>
-    <h1>Mi Devocional Diario</h1>
-    <p>
-      Un espacio personal para escuchar la voz de Dios, meditar en Su Palabra
-      y convertir cada enseñanza en una acción concreta.
-    </p>
-  </header>
-
-  <main class="contenedor">
-
-    <!-- INICIO -->
-    <section class="tarjeta">
-      <div class="panel-inicial">
+  <main class="shell">
+    <header>
+      <div class="brand">
+        <div class="brand-mark">✦</div>
         <div>
-          <div class="fecha" id="fechaActual">Devocional del día</div>
-          <h2>🌿 Comienza tu tiempo con Dios</h2>
-          <p class="subtexto">
-            Abre el Versículo del Día en YouVersion. Léelo con calma,
-            cópialo en esta página y reflexiona en cada sección.
-          </p>
+          <h1>Rhema Diario</h1>
+          <p>Lectura bíblica anual · encuentro personal con Dios</p>
         </div>
-
-        <a
-          class="boton dorado"
-          href="https://www.bible.com/es/verse-of-the-day"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          📱 Abrir YouVersion
-        </a>
       </div>
-
-      <div class="progreso">
-        <div class="barra-progreso" id="barraProgreso"></div>
+      <div class="header-actions">
+        <input class="date-select" id="datePicker" type="date" aria-label="Elegir fecha del devocional">
+        <button class="btn soft" id="todayBtn">Hoy</button>
+        <button class="btn" id="printBtn">Imprimir</button>
+        <button class="btn primary" id="exportBtn">Exportar diario</button>
       </div>
+    </header>
 
-      <p class="texto-progreso">
-        Avance del devocional: <strong id="porcentajeProgreso">0%</strong>
-      </p>
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow" id="friendlyDate">Devocional de hoy</div>
+          <h2>Versículo Rhema del día</h2>
+          <p class="verse" id="verseText"></p>
+          <div class="reference" id="verseReference"></div>
+          <p class="hero-note">Lee despacio. Observa qué palabra despierta fe, dirección, convicción o consuelo en tu corazón.</p>
+        </div>
+        <div class="hero-card">
+          <div>
+            <div class="progress-meta"><span>Lectura anual</span><span id="progressText">0%</span></div>
+            <div class="progress"><span id="progressBar" style="width:0%"></span></div>
+          </div>
+          <div class="streak">🔥 <strong id="streakValue">0</strong> días registrados</div>
+          <div class="small" id="dayNumber">Día 1 de 365</div>
+        </div>
+      </div>
     </section>
 
-    <!-- VERSÍCULO RHEMA -->
-    <section class="tarjeta">
-      <h2>✨ 1. Mi versículo Rhema</h2>
-      <p class="subtexto">
-        Rhema es la palabra que cobra un significado especial para tu vida
-        mientras lees y meditas en la Escritura.
-      </p>
+    <section class="layout">
+      <div>
+        <section class="card">
+          <div class="card-title">
+            <div class="title-left"><div class="icon">📖</div><div><h3>Lectura bíblica de hoy</h3><div class="small">Plan anual secuencial para recorrer toda la Biblia</div></div></div>
+          </div>
+          <div class="reading-list" id="readingList"></div>
+        </section>
 
-      <label for="referencia">Referencia bíblica</label>
-      <input
-        id="referencia"
-        class="campo-devocional"
-        type="text"
-        placeholder="Ejemplo: Salmo 42:11"
-      >
+        <section class="card" style="margin-top:18px">
+          <div class="card-title">
+            <div class="title-left"><div class="icon">🔎</div><div><h3>Profundiza en el versículo</h3><div class="small">Contexto, significado y una palabra del idioma original</div></div></div>
+          </div>
+          <div class="deep-grid">
+            <div class="deep-box"><h4>Contexto bíblico</h4><p id="contextText"></p></div>
+            <div class="deep-box"><h4>Verdad central</h4><p id="truthText"></p></div>
+            <div class="deep-box"><h4>Pregunta para meditar</h4><p id="meditationQuestion"></p></div>
+            <div class="deep-box"><h4>Acción sencilla</h4><p id="simpleAction"></p></div>
+          </div>
+          <div class="word" id="originalWord"></div>
+        </section>
 
-      <label for="versionBiblica">Versión bíblica</label>
-      <input
-        id="versionBiblica"
-        class="campo-devocional"
-        type="text"
-        placeholder="Ejemplo: NVI, RVR1960 o NTV"
-      >
+        <section class="card" style="margin-top:18px">
+          <div class="card-title">
+            <div class="title-left"><div class="icon">✍️</div><div><h3>Mi devocional diario</h3><div class="small">Escribe con libertad. Tus respuestas se guardan solamente en este dispositivo.</div></div></div>
+          </div>
+          <div class="form-grid">
+            <div>
+              <label for="rhemaWord">1. Mi Palabra Rhema</label>
+              <input id="rhemaWord" type="text" placeholder="¿Qué palabra o frase habló de manera especial a mi corazón?">
+            </div>
+            <div>
+              <label for="motivation">2. ¿A qué me motiva esta Palabra?</label>
+              <textarea id="motivation" placeholder="Describe la invitación, dirección o convicción que recibes."></textarea>
+            </div>
+            <div>
+              <label for="application">3. ¿Cómo puedo aplicarla hoy a mi vida?</label>
+              <textarea id="application" placeholder="Escribe una acción concreta, realista y medible para este día."></textarea>
+            </div>
+            <div>
+              <label for="dontForget">4. Lo que no debo olvidar</label>
+              <textarea id="dontForget" placeholder="Resume una verdad que deseas recordar durante el día."></textarea>
+            </div>
+            <div>
+              <label for="prayerNotes">5. Mi oración</label>
+              <textarea id="prayerNotes" placeholder="Responde a Dios con una oración personal."></textarea>
+            </div>
+            <div class="save-row">
+              <button class="btn primary" id="saveBtn">Guardar devocional</button>
+              <button class="btn" id="clearBtn">Limpiar respuestas</button>
+              <span class="save-msg" id="saveMsg"></span>
+            </div>
+          </div>
+        </section>
+      </div>
 
-      <label for="versiculo">Escribe el Versículo del Día</label>
-      <textarea
-        id="versiculo"
-        class="campo-devocional versiculo-area"
-        placeholder="Copia aquí el texto del Versículo del Día que aparece en YouVersion..."
-      ></textarea>
+      <aside class="sidebar">
+        <section class="card">
+          <div class="card-title">
+            <div class="title-left"><div class="icon">🌱</div><div><h3>Rutina de encuentro</h3><div class="small">Marca cada paso conforme avances</div></div></div>
+          </div>
+          <div class="checklist" id="checklist">
+            <label class="checkline"><input type="checkbox" data-step="silence"> Hice una pausa y guardé silencio.</label>
+            <label class="checkline"><input type="checkbox" data-step="read"> Leí el pasaje asignado.</label>
+            <label class="checkline"><input type="checkbox" data-step="meditate"> Medité en el versículo Rhema.</label>
+            <label class="checkline"><input type="checkbox" data-step="write"> Escribí una aplicación práctica.</label>
+            <label class="checkline"><input type="checkbox" data-step="pray"> Terminé con oración.</label>
+          </div>
+        </section>
 
-      <div class="caja-guia">
-        <strong>Para meditar:</strong> lee el versículo lentamente tres veces.
-        Identifica qué frase llama
+        <section class="card">
+          <div class="card-title">
+            <div class="title-left"><div class="icon">🙏</div><div><h3>Oración guiada</h3></div></div>
+          </div>
+          <p class="prayer" id="guidedPrayer"></p>
+        </section>
+
+        <section class="card">
+          <div class="card-title">
+            <div class="title-left"><div class="icon">🕊️</div><div><h3>Mis registros recientes</h3><div class="small">Selecciona un día para volver a leerlo</div></div></div>
+          </div>
+          <div class="history-list" id="historyList"></div>
+        </section>
+      </aside>
+    </section>
+
+    <footer>
+      Rhema Diario · Una herramienta personal para cultivar constancia, reflexión y relación con Dios.
+    </footer>
+  </main>
+
+<script>
+const books = [
+["Génesis",50],["Éxodo",40],["Levítico",27],["Números",36],["Deuteronomio",34],["Josué",24],["Jueces",21],["Rut",4],
+["1 Samuel",31],["2 Samuel",24],["1 Reyes",22],["2 Reyes",25],["1 Crónicas",29],["2 Crónicas",36],["Esdras",10],["Nehemías",13],["Ester",10],
+["Job",42],["Salmos",150],["Proverbios",31],["Eclesiastés",12],["Cantares",8],["Isaías",66],["Jeremías",52],["Lamentaciones",5],
+["Ezequiel",48],["Daniel",12],["Oseas",14],["Joel",3],["Amós",9],["Abdías",1],["Jonás",4],["Miqueas",7],["Nahúm",3],["Habacuc",3],
+["Sofonías",3],["Hageo",2],["Zacarías",14],["Malaquías",4],["Mateo",28],["Marcos",16],["Lucas",24],["Juan",21],["Hechos",28],
+["Romanos",16],["1 Corintios",16],["2 Corintios",13],["Gálatas",6],["Efesios",6],["Filipenses",4],["Colosenses",4],["1 Tesalonicenses",5],
+["2 Tesalonicenses",3],["1 Timoteo",6],["2 Timoteo",4],["Tito",3],["Filemón",1],["Hebreos",13],["Santiago",5],["1 Pedro",5],
+["2 Pedro",3],["1 Juan",5],["2 Juan",1],["3 Juan",1],["Judas",1],["Apocalipsis",22]
+];
+
+const rhemaVerses = [
+ {ref:"Josué 1:9",text:"Mira que te mando que te esfuerces y seas valiente; no temas ni desmayes, porque Jehová tu Dios será contigo en dondequiera que fueres.",
+ context:"Josué recibe una tarea mayor que sus fuerzas. Dios no le promete ausencia de desafíos, sino Su presencia constante mientras avanza.",
+ truth:"La valentía bíblica no nace de sentirnos invencibles, sino de recordar quién camina con nosotros.",
+ q:"¿En qué área necesito actuar confiando más en la presencia de Dios que en mis propias fuerzas?",
+ action:"Da hoy un paso concreto en esa responsabilidad que has estado posponiendo.",
+ word:"חָזַק · jazáq", meaning:"fortalecerse, mantenerse firme, cobrar ánimo", prayer:"Señor, fortalece mi corazón. Ayúdame a avanzar con valentía, recordando que Tu presencia va conmigo."},
+ {ref:"Salmos 23:1",text:"Jehová es mi pastor; nada me faltará.",
+ context:"David usa la imagen de un pastor cercano que guía, alimenta y protege. El énfasis no está en tenerlo todo, sino en pertenecer al Pastor.",
+ truth:"Cuando Dios ocupa el centro, la ansiedad deja de gobernar nuestras decisiones.",
+ q:"¿Qué preocupación necesito entregar hoy al cuidado de mi Pastor?",
+ action:"Escribe una preocupación y conviértela en una oración breve de confianza.",
+ word:"רָעָה · ra‘áh", meaning:"pastorear, cuidar, alimentar y acompañar", prayer:"Padre, gracias porque cuidas de mí. Enséñame a descansar en Tu dirección y a caminar con confianza."},
+ {ref:"Proverbios 3:5-6",text:"Fíate de Jehová de todo tu corazón, y no estribes en tu prudencia. Reconócelo en todos tus caminos, y él enderezará tus veredas.",
+ context:"La sabiduría de Proverbios invita a abandonar una vida guiada solamente por la autosuficiencia. Reconocer a Dios implica incluirlo en cada decisión.",
+ truth:"Confiar es rendir el control y permitir que Dios ordene nuestro camino.",
+ q:"¿Qué decisión estoy intentando resolver sin consultar a Dios?",
+ action:"Antes de tomar una decisión hoy, haz una pausa y ora con sinceridad.",
+ word:"בָּטַח · batáj", meaning:"confiar, descansar con seguridad, apoyarse con firmeza", prayer:"Dios, quiero confiar en Ti de todo corazón. Dirige mis decisiones y corrige mis caminos."},
+ {ref:"Isaías 40:31",text:"Mas los que esperan a Jehová tendrán nuevas fuerzas; levantarán las alas como águilas; correrán, y no se cansarán; caminarán, y no se fatigarán.",
+ context:"Isaías habla a personas cansadas y desanimadas. La esperanza en Dios no es pasividad; es una espera llena de fe que renueva el interior.",
+ truth:"Dios puede renovar lo que el cansancio ha debilitado.",
+ q:"¿Dónde necesito dejar de esforzarme solo y aprender a esperar en Dios?",
+ action:"Aparta unos minutos sin distracciones y descansa conscientemente en la fidelidad de Dios.",
+ word:"קָוָה · qaváh", meaning:"esperar con esperanza, permanecer unido, confiar mientras se aguarda", prayer:"Señor, renueva mis fuerzas. Enséñame a esperar en Ti sin desesperarme y a caminar bajo Tu gracia."},
+ {ref:"Jeremías 29:11",text:"Porque yo sé los pensamientos que tengo acerca de vosotros, dice Jehová, pensamientos de paz, y no de mal, para daros el fin que esperáis.",
+ context:"Estas palabras fueron dadas a un pueblo que viviría un proceso largo antes de ver restauración. Dios afirma que su historia no ha terminado.",
+ truth:"Aunque no comprendamos el proceso, podemos confiar en el corazón bueno de Dios.",
+ q:"¿Qué proceso difícil necesita ser visto desde la perspectiva de la esperanza?",
+ action:"Anota una evidencia de la fidelidad de Dios que ya hayas visto en tu historia.",
+ word:"שָׁלוֹם · shalóm", meaning:"paz integral, bienestar, plenitud y restauración", prayer:"Padre, ayúdame a confiar en Tus planes aun cuando el proceso sea largo. Afirma mi esperanza en Ti."},
+ {ref:"Mateo 6:33",text:"Mas buscad primeramente el reino de Dios y su justicia, y todas estas cosas os serán añadidas.",
+ context:"Jesús enseña en medio de un mensaje sobre la preocupación. No ignora nuestras necesidades, sino que reordena nuestras prioridades.",
+ truth:"Poner el reino de Dios primero trae claridad para ordenar todo lo demás.",
+ q:"¿Qué prioridad necesita volver a ocupar su lugar correcto?",
+ action:"Haz primero una acción que honre a Dios antes de entrar en las tareas urgentes del día.",
+ word:"ζητέω · zētéō", meaning:"buscar activamente, procurar con intención y perseverancia", prayer:"Jesús, quiero buscar Tu reino primero. Ordena mis prioridades y enséñame a confiar en Tu provisión."},
+ {ref:"Mateo 11:28",text:"Venid a mí todos los que estáis trabajados y cargados, que yo os haré descansar.",
+ context:"Jesús ofrece descanso a personas agotadas por cargas físicas, emocionales y espirituales. Su invitación es personal: venir a Él.",
+ truth:"El descanso más profundo comienza al acercarnos a Jesús, no solamente al detener nuestras actividades.",
+ q:"¿Qué carga necesito dejar hoy delante de Jesús?",
+ action:"Nombra en oración esa carga y evita recuperarla mentalmente cada vez que aparezca.",
+ word:"ἀναπαύω · anapaúō", meaning:"dar descanso, refrescar, aliviar y renovar", prayer:"Jesús, vengo a Ti con mis cargas. Dame descanso y enséñame a vivir desde Tu paz."},
+ {ref:"Juan 15:5",text:"Yo soy la vid, vosotros los pámpanos: el que está en mí, y yo en él, éste lleva mucho fruto; porque sin mí nada podéis hacer.",
+ context:"Jesús describe una relación de dependencia continua. El fruto no surge por presión, sino por permanecer conectado a la fuente de vida.",
+ truth:"La vida espiritual saludable se construye desde la comunión, no desde la autosuficiencia.",
+ q:"¿Estoy intentando producir resultados sin permanecer cerca de Jesús?",
+ action:"Haz una pausa durante el día para volver conscientemente a la presencia de Jesús.",
+ word:"μένω · ménō", meaning:"permanecer, habitar, continuar unido y mantenerse cerca", prayer:"Jesús, quiero permanecer en Ti. Que mis acciones nazcan de nuestra relación y produzcan fruto que te honre."},
+ {ref:"Romanos 8:28",text:"Y sabemos que a los que a Dios aman, todas las cosas les ayudan a bien, es a saber, a los que conforme al propósito son llamados.",
+ context:"Pablo no afirma que todo lo que sucede sea bueno. Declara que Dios puede obrar incluso en medio de circunstancias complejas para cumplir Su propósito.",
+ truth:"Nada queda fuera del alcance redentor de Dios.",
+ q:"¿Qué situación necesito mirar con fe, sin negar su dificultad?",
+ action:"Cambia una queja repetitiva por una oración que reconozca el poder redentor de Dios.",
+ word:"συνεργέω · synergéō", meaning:"trabajar juntamente, colaborar para producir un resultado", prayer:"Dios, confío en que puedes obrar aun en lo que no entiendo. Cumple Tu propósito y forma mi carácter."},
+ {ref:"Filipenses 4:6-7",text:"Por nada estéis afanosos; sino sean notorias vuestras peticiones delante de Dios en toda oración y ruego, con hacimiento de gracias. Y la paz de Dios guardará vuestros corazones y vuestros entendimientos en Cristo Jesús.",
+ context:"Pablo escribe desde una situación difícil. Enseña una práctica: transformar la ansiedad en oración específica acompañada de gratitud.",
+ truth:"La oración no siempre cambia inmediatamente la situación, pero permite que la paz de Dios custodie nuestro interior.",
+ q:"¿Qué pensamiento ansioso puedo transformar hoy en una petición concreta?",
+ action:"Escribe tres peticiones y acompaña cada una con una razón para agradecer.",
+ word:"φρουρέω · phrouréō", meaning:"guardar como un centinela, proteger y vigilar", prayer:"Señor, entrego mis preocupaciones. Guarda mi mente y mi corazón con Tu paz en Cristo Jesús."},
+ {ref:"2 Timoteo 1:7",text:"Porque no nos ha dado Dios el espíritu de temor, sino el de fortaleza, y de amor, y de templanza.",
+ context:"Pablo anima a Timoteo a vivir su llamado sin retraerse. La respuesta al temor incluye poder, amor y dominio propio.",
+ truth:"Dios no nos llama a actuar desde el pánico, sino desde una mente fortalecida por Su Espíritu.",
+ q:"¿Qué temor está intentando dirigir mis decisiones?",
+ action:"Elige una respuesta basada en amor y dominio propio ante una situación que normalmente te intimidaría.",
+ word:"σωφρονισμός · sōphronismós", meaning:"dominio propio, sensatez, disciplina y mente equilibrada", prayer:"Espíritu Santo, reemplaza mi temor con fortaleza, amor y dominio propio. Ayúdame a responder con sabiduría."},
+ {ref:"Hebreos 12:2",text:"Puestos los ojos en el autor y consumador de la fe, en Jesús; el cual, habiéndole sido propuesto gozo, sufrió la cruz, menospreciando la vergüenza, y sentóse a la diestra del trono de Dios.",
+ context:"Hebreos compara la vida de fe con una carrera que requiere perseverancia. La mirada se fija en Jesús, no en las distracciones.",
+ truth:"La perseverancia crece cuando nuestra atención vuelve una y otra vez a Jesús.",
+ q:"¿Qué distracción me está haciendo perder de vista a Jesús?",
+ action:"Reduce hoy una distracción concreta y reemplázala con un momento breve de oración o lectura.",
+ word:"ἀφοράω · aphoráō", meaning:"mirar apartando la vista de otras cosas para fijarla en una sola", prayer:"Jesús, fija mi mirada en Ti. Ayúdame a correr con perseverancia y a no distraerme de Tu voz."}
+];
+
+const chapterList=[];
+books.forEach(([book,total])=>{ for(let c=1;c<=total;c++) chapterList.push(`${book} ${c}`); });
+
+function getDayOfYear(date){
+  const start=new Date(date.getFullYear(),0,0);
+  const diff=date-start;
+  return Math.floor(diff/86400000);
+}
+function dateKey(date){ return date.toISOString().slice(0,10); }
+function safeDate(value){ const [y,m,d]=value.split("-").map(Number); return new Date(y,m-1,d); }
+function formatDate(date){ return new Intl.DateTimeFormat("es-MX",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(date); }
+function readingForDay(day){
+  const total=chapterList.length, days=365;
+  const start=Math.floor((day-1)*total/days), end=Math.floor(day*total/days);
+  return chapterList.slice(start,end);
+}
+function getEntry(date){ return JSON.parse(localStorage.getItem("rhema:"+dateKey(date))||"{}"); }
+function saveEntry(date,obj){ localStorage.setItem("rhema:"+dateKey(date),JSON.stringify(obj)); }
+function allEntries(){
+  return Object.keys(localStorage).filter(k=>k.startsWith("rhema:")).map(k=>({key:k.replace("rhema:",""),data:JSON.parse(localStorage.getItem(k)||"{}")}))
+    .filter(x=>x.data && (x.data.rhemaWord||x.data.application||x.data.prayerNotes)).sort((a,b)=>b.key.localeCompare(a.key));
+}
+let selectedDate=new Date();
+
+function render(){
+  const key=dateKey(selectedDate), day=Math.min(getDayOfYear(selectedDate),365);
+  const item=rhemaVerses[(day-1)%rhemaVerses.length];
+  document.getElementById("datePicker").value=key;
+  document.getElementById("friendlyDate").textContent=formatDate(selectedDate);
+  document.getElementById("verseText").textContent="“"+item.text+"”";
+  document.getElementById("verseReference").textContent=item.ref;
+  document.getElementById("contextText").textContent=item.context;
+  document.getElementById("truthText").textContent=item.truth;
+  document.getElementById("meditationQuestion").textContent=item.q;
+  document.getElementById("simpleAction").textContent=item.action;
+  document.getElementById("originalWord").innerHTML=`<strong>${item.word}</strong><br><span class="small">Significado aproximado: ${item.meaning}.</span>`;
+  document.getElementById("guidedPrayer").textContent=item.prayer;
+  document.getElementById("dayNumber").textContent=`Día ${day} de 365`;
+  const pct=Math.round(day/365*100);
+  document.getElementById("progressText").textContent=pct+"%";
+  document.getElementById("progressBar").style.width=pct+"%";
+  const reads=readingForDay(day);
+  document.getElementById("readingList").innerHTML=reads.map(r=>`<div class="reading-pill">${r}</div>`).join("");
+  const entry=getEntry(selectedDate);
+  ["rhemaWord","motivation","application","dontForget","prayerNotes"].forEach(id=>document.getElementById(id).value=entry[id]||"");
+  document.querySelectorAll("[data-step]").forEach(ch=>ch.checked=!!(entry.steps||{})[ch.dataset.step]);
+  document.getElementById("saveMsg").textContent=entry.savedAt?`Último guardado: ${new Date(entry.savedAt).toLocaleString("es-MX")}`:"";
+  renderHistory();
+}
+function collect(){
+  const steps={};
+  document.querySelectorAll("[data-step]").forEach(ch=>steps[ch.dataset.step]=ch.checked);
+  return {
+    rhemaWord:document.getElementById("rhemaWord").value.trim(),
+    motivation:document.getElementById("motivation").value.trim(),
+    application:document.getElementById("application").value.trim(),
+    dontForget:document.getElementById("dontForget").value.trim(),
+    prayerNotes:document.getElementById("prayerNotes").value.trim(),
+    steps,savedAt:new Date().toISOString()
+  };
+}
+function renderHistory(){
+  const entries=allEntries();
+  document.getElementById("streakValue").textContent=entries.length;
+  document.getElementById("historyList").innerHTML=entries.length?entries.slice(0,12).map(e=>
+    `<button class="history-item" data-date="${e.key}"><strong>${new Date(e.key+"T12:00:00").toLocaleDateString("es-MX",{day:"numeric",month:"short",year:"numeric"})}</strong><span>${e.data.rhemaWord||e.data.application||"Devocional guardado"}</span></button>`
+  ).join(""):`<div class="small">Todavía no hay registros. Guarda tu primer devocional.</div>`;
+  document.querySelectorAll(".history-item").forEach(btn=>btn.addEventListener("click",()=>{selectedDate=safeDate(btn.dataset.date);render();window.scrollTo({top:0,behavior:"smooth"});}));
+}
+document.getElementById("saveBtn").addEventListener("click",()=>{
+  saveEntry(selectedDate,collect());
+  document.getElementById("saveMsg").textContent="✓ Devocional guardado en este dispositivo.";
+  renderHistory();
+});
+document.getElementById("clearBtn").addEventListener("click",()=>{
+  if(confirm("¿Deseas limpiar las respuestas visibles de este día?")){
+    ["rhemaWord","motivation","application","dontForget","prayerNotes"].forEach(id=>document.getElementById(id).value="");
+    document.querySelectorAll("[data-step]").forEach(ch=>ch.checked=false);
+    document.getElementById("saveMsg").textContent="Respuestas limpiadas. Presiona Guardar para reemplazar el registro.";
+  }
+});
+document.getElementById("datePicker").addEventListener("change",e=>{selectedDate=safeDate(e.target.value);render();});
+document.getElementById("todayBtn").addEventListener("click",()=>{selectedDate=new Date();render();});
+document.getElementById("printBtn").addEventListener("click",()=>window.print());
+document.getElementById("exportBtn").addEventListener("click",()=>{
+  const entries=allEntries();
+  if(!entries.length){alert("Todavía no hay devocionales guardados.");return;}
+  const content=entries.map(e=>{
+    const d=e.data;
+    return `RHEMA DIARIO — ${e.key}
+Palabra Rhema: ${d.rhemaWord||""}
+¿A qué me motiva?: ${d.motivation||""}
+¿Cómo la aplico?: ${d.application||""}
+Lo que no debo olvidar: ${d.dontForget||""}
+Mi oración: ${d.prayerNotes||""}
+----------------------------------------`;
+  }).join("\n\n");
+  const blob=new Blob([content],{type:"text/plain;charset=utf-8"});
+  const url=URL.createObjectURL(blob), a=document.createElement("a");
+  a.href=url;a.download="Mi-diario-rhema.txt";a.click();URL.revokeObjectURL(url);
+});
+render();
+</script>
+</body>
+</html>
